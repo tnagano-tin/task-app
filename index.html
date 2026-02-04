@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>締切タスク</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <div>
+        <h1 class="title">締切タスク</h1>
+        <p class="subtitle">締切日と優先度で整理（同日なら 高→中→低）</p>
+      </div>
+      <button id="themeToggle" class="ghost" type="button" aria-label="toggle theme">🌙</button>
+    </header>
+
+    <!-- タブ -->
+    <div class="tabs" role="tablist" aria-label="project tabs">
+      <button class="tab active" data-type="dcard" role="tab" aria-selected="true">dカード</button>
+      <button class="tab" data-type="lemino" role="tab" aria-selected="false">Lemino</button>
+    </div>
+
+    <!-- 入力エリア -->
+    <div class="panel">
+      <div class="inputRow">
+        <div class="titleWrap">
+          <label class="label">タスク名</label>
+          <input id="taskTitle" placeholder="例：資料作成" autocomplete="off" />
+          <div id="titleHistoryBox" aria-label="title history"></div>
+        </div>
+
+        <div class="field">
+          <label class="label">締切日</label>
+          <input id="taskDueDate" type="date" />
+        </div>
+
+        <div class="field">
+          <label class="label">優先度</label>
+          <select id="taskPriority">
+            <option value="high">高</option>
+            <option value="medium" selected>中</option>
+            <option value="low">低</option>
+          </select>
+        </div>
+
+        <div class="field actions">
+          <label class="label">&nbsp;</label>
+          <button id="addTaskBtn" class="primary" type="button">追加</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <span class="chip">未完了 <b id="todoCount">0</b></span>
+        <span class="chip">完了 <b id="doneCount">0</b></span>
+        <span class="chip danger">期限切れ <b id="overdueCount">0</b></span>
+        <span class="chip">表示中 <b id="activeTabLabel">dカード用</b></span>
+      </div>
+    </div>
+
+    <!-- 2カラム -->
+    <div class="columns">
+      <section class="col">
+        <h2>未完了</h2>
+        <ul id="todoList"></ul>
+      </section>
+
+      <section class="col">
+        <h2>完了</h2>
+        <ul id="doneList"></ul>
+      </section>
+    </div>
+  </div>
+
+  <!-- 編集モーダル -->
+  <div id="editOverlay" class="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="edit task">
+      <h3>編集</h3>
+
+      <div class="modalRow">
+        <label for="editTitle">タスク名</label>
+        <input id="editTitle" />
+      </div>
+
+      <div class="modalRow">
+        <label for="editDueDate">締切日</label>
+        <input id="editDueDate" type="date" />
+      </div>
+
+      <div class="modalRow">
+        <label for="editPriority">優先度</label>
+        <select id="editPriority">
+          <option value="high">高</option>
+          <option value="medium">中</option>
+          <option value="low">低</option>
+        </select>
+      </div>
+
+      <div class="modalActions">
+        <button id="editCancelBtn" type="button">キャンセル</button>
+        <button id="editSaveBtn" class="primary" type="button">保存</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
